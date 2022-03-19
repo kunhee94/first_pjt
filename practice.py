@@ -4,12 +4,14 @@ import json
 import re
 
 
-api_key = ''
+api_key = '내 api키'
 
 # 당기순이익
 income = 0
 # 발행주식수
 total_stock = 0
+# 자본총액
+equity = 0
 
 
 # 고유번호 추출하기
@@ -85,3 +87,39 @@ if resp2.status_code == 200:
         print(stock_json['message'])
 
 EPS = income/total_stock
+
+
+# 자본총계 찾기
+URL_equity = 'https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json'
+PARAMS3 = {
+    'crtfc_key': f'{api_key}',    # API 인증키
+    'corp_code': f'{corp_code}',  # 회사 고유번호
+    'bsns_year': '2021',  # 사업연도(4자리)
+    'reprt_code': '11011',    # 사업보고서
+    'fs_div': 'CFS',
+}
+resp3 = requests.get(url=URL_equity, params=PARAMS3)
+# http 정상응답시 처리
+if resp3.status_code == 200:
+    # json 데이터로 받아준다.
+    equity_json = resp3.json()
+    # 눈디버깅을 위해서 json.dumps 사용
+    equity_str = json.dumps(equity_json, indent=4, ensure_ascii=False)
+    # print(asset_str)
+    # status가 정상이라면
+    if equity_json['status'] == "000":
+        # 리스트 받아와서
+        detail = equity_json['list']
+        for x in detail:
+            # 보통주의 발행주식 충수 찾기
+            if x['sj_div'] == 'BS' and x['account_nm'] == '자본총계':
+                x_str = json.dumps(x, indent=4, ensure_ascii=False)
+                equity = int(re.sub(r'[^0-9]', '', x['thstrm_amount']))
+    # 아니면 오류메시지 출력
+    else:
+        print(equity_json['message'])
+
+ROE = income/equity
+
+print(EPS)
+print(ROE)
