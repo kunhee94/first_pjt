@@ -4,7 +4,7 @@ import json
 import re
 
 
-api_key = '내 api키'
+api_key = '408e1771f5975d135bb7af91efe3daf8516cc749'
 
 # 당기순이익
 income = 0
