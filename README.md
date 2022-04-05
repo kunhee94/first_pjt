@@ -389,6 +389,31 @@ def result(request):
 - `corp_list = dart.get_corp_list()` 이부분에서 시간이 걸리는것 같음
 - 혹시 모든 리스트 안받고 입력값에 대한 정보만 따로 가져올수없을까 싶었으나 타입이`dart_fss.corp.corp_list.CorpList`였기에 불가능했음
 
+### 5일차
+
+- 한동안 알고리즘 공부하느라 손을 못대었는데 오랜만에 프로젝트 다시 시작
+- 저번에 구해둔 EPS와 ROE를 이용해 적정주가를 계산하고 이를 이용해 매수에 주의 주기 
+- 이것 때문에 음의 수를 제대로 못받아서 이상한 결과가 나왔음
+
+```python
+income = int(re.sub(r'[^0-9]', '', x['thstrm_amount']))
+```
+
+- replace를 활용하여 아래처럼 바꿔줌
+
+```python
+x['thstrm_amount'] = x['thstrm_amount'].replace(',','')
+income = int(x['thstrm_amount'])
+```
+
+- base.html에 아래 코드삽입하여 입력,결과창을 페이지 중앙으로 옮김
+
+```html
+div class="container h-100 d-flex justify-content-center align-items-center"style="min-height:80vh">
+```
+
+
+
 
 
 

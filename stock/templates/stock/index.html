@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block content %}
+{% block content%}
+
 <form action="{% url 'stock:result' %}" method="POST">
   {% csrf_token %}
   <label for="name">주식이름</label>
   <input type="text" id="name" name="name">
 </form>
-
 
 {% endblock content %}

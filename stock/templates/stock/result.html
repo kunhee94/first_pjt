@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-결과 창입니다.
+
+2021년 사업보고서 기준 
 <br>
-{{income}}
+{{name}}의 적정주가는 {{fair_value}}원 입니다.
 <br>
-{{equity}}
-<br>
-{{total_stock}}
-<br>
-{{EPS}}
-<br>
-{{ROE}}
+현 주가가 더 높다면 매수에 주의를 기울이세요
+
 {% endblock content %}
